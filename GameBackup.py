@@ -120,19 +120,14 @@ def create_frame_layout(index):
                      sg.Button(key=(index, 0, 1), button_text='Save Details', enable_events=True, size=(12, 1)),
                      sg.Button(key=(index, 0, 2), button_text='Backup Now', enable_events=True, size=(12, 1),
                                button_color='green'),
-                     sg.Button(key=(index, 0, 3), button_text='Remove Game', enable_events=True, size=(12, 1),
+                     sg.Button(key=(index, 0, 3), button_text='Remove', enable_events=True, size=(12, 1),
                                button_color='indian red')],
-                    [sg.FolderBrowse(button_text='Pick Game Folder',
-                                     key=(index, 1, 0), enable_events=True,
-                                     size=(14, 1), ),
-                     sg.InputText(key=(index, 1, 1), size=(54, 1)),
-                     sg.Button(button_text='< Open folder', key=(index, 1, 2), enable_events=True, size=(12, 1))],
-                    [sg.FolderBrowse(button_text='Pick Backup Folder',
-                                     key=(index, 2, 0),
-                                     enable_events=True,
-                                     size=(14, 1), ),
-                     sg.InputText(key=(index, 2, 1), size=(54, 1)),
-                     sg.Button(button_text='< Open folder', key=(index, 2, 2), enable_events=True, size=(12, 1))],
+                    [sg.InputText(key=(index, 1, 1), size=(54, 1)),
+                     sg.FolderBrowse(button_text='Pick Game Folder', size=(14, 1)),
+                     sg.Button(button_text='< Open Folder', key=(index, 1, 2), enable_events=True, size=(12, 1))],
+                    [sg.InputText(key=(index, 2, 1), size=(54, 1)),
+                     sg.FolderBrowse(button_text='Pick Backup Folder', size=(14, 1)),
+                     sg.Button(button_text='< Open Folder', key=(index, 2, 2), enable_events=True, size=(12, 1))],
                     ]
 
     return frame_layout
@@ -144,9 +139,9 @@ def create_main_window(settings, window, location):
     column2 = []
     column2 += [[sg.Multiline(key='-OUTPUT_TEXT-', enable_events=True, size=(38, 41), autoscroll=True)]]
     column2 += [[sg.Button(key='-ADD_GAME-', button_text='Add Game', enable_events=True, size=(12,1))]]
-    layout = [[sg.Column(column1, size=(670,700), scrollable=True), sg.Column(column2, size=(300, 700), scrollable=False)]]
+    layout = [[sg.Column(column1, size=(670, 700), scrollable=True), sg.Column(column2, size=(300, 700), scrollable=False)]]
 
-    return sg.Window('Backup Save Games  -DontDoDeath 2021- 1.2', layout, location=location)
+    return sg.Window('Backup Save Games  -DontDoDeath 2021- 1.3', layout, location=location)
 
 
 def populate_window(settings, window):
@@ -169,12 +164,15 @@ def main():
             populate_window(settings, window)
 
         event, values = window.read()
+        print(event)
         if event == sg.WIN_CLOSED or event == 'Cancel':
             break
 
         # select source folder event
         elif event[1] == 1 and event[2] == 0:
+            print('select source folder')
             file_name = values[(event[0], 1, 0)]
+            print(file_name)
             window[(event[0], 1, 1)].update(file_name)
 
         # select output folder event
